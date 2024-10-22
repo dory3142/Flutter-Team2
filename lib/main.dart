@@ -196,7 +196,7 @@ class TeamIntroduction extends StatelessWidget {
                       ),
                       MemberRow(
                         imagePath: 'images/hyeon.png',
-                        name: "양현핑g",
+                        name: "양현핑",
                         mbti: "ISFP",
                         page: DetailPageHyeon(),
                         role: "기술 담당 인도인",
