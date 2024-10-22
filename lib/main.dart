@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'DetailPageYeon.dart';
+import 'DetailPageHoon.dart';
+import 'DetailPageHyeon.dart';
+import 'DetailPageMin.dart';
+import 'DetailPageRam.dart';
 void main() {
   runApp(MyApp());
 }
@@ -160,36 +164,41 @@ class TeamIntroduction extends StatelessWidget {
                     children: [
                       MemberRow(
                         imagePath: 'images/ram.png',
-                        name: "서예람",
+                        name: "예람핑",
                         mbti: "ENTP",
                         role: "불꽃 카리스마 팀장",
+                        page: DetailPageRam(),
                         isImageFirst: true,
                       ),
                       MemberRow(
                         imagePath: 'images/yeon.png',
-                        name: "김서연",
+                        name: "서연핑",
                         mbti: "ISTJ",
+                        page:DetailPageYeon(),
                         role: "벌레 단속 세스코",
                         isImageFirst: false,
                       ),
                       MemberRow(
                         imagePath: 'images/min.png',
-                        name: "이지민",
+                        name: "지민핑",
                         mbti: "ISTP",
                         role: "칼퇴 요정 뽀로로",
+                        page: DetailPageMin(),
                         isImageFirst: true,
                       ),
                       MemberRow(
                         imagePath: 'images/hoon.png',
-                        name: "김성훈",
+                        name: "성훈핑",
                         mbti: "ISFP",
                         role: "출결 담당 너구리",
+                        page: DetailPageHoon(),
                         isImageFirst: false,
                       ),
                       MemberRow(
                         imagePath: 'images/hyeon.png',
-                        name: "양현",
+                        name: "양현핑g",
                         mbti: "ISFP",
+                        page: DetailPageHyeon(),
                         role: "기술 담당 인도인",
                         isImageFirst: true,
                       ),
@@ -205,12 +214,12 @@ class TeamIntroduction extends StatelessWidget {
   }
 }
 
-// Widget for displaying a member's information in a row
 class MemberRow extends StatelessWidget {
   final String imagePath;
   final String name;
   final String mbti;
   final String role;
+  final Widget page; // 이 부분에서 개별 페이지를 받음
   final bool isImageFirst;
 
   const MemberRow({
@@ -219,30 +228,43 @@ class MemberRow extends StatelessWidget {
     required this.name,
     required this.mbti,
     required this.role,
+    required this.page,  // 페이지를 넘겨받음
     required this.isImageFirst,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: isImageFirst
-            ? [
-          Image.asset(
-            imagePath,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,  // 해당 페이지로 이동
           ),
-          SizedBox(width: 20),
-          MemberInfo(name: name, mbti: mbti, role: role),
-        ]
-            : [
-          MemberInfo(name: name, mbti: mbti, role: role),
-          SizedBox(width: 20),
-          Image.asset(
-            imagePath,
-          ),
-        ],
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: isImageFirst
+              ? [
+            Hero(
+              tag: name, // Hero 애니메이션 태그
+              child: Image.asset(imagePath),
+            ),
+            SizedBox(width: 20),
+            MemberInfo(name: name, mbti: mbti, role: role),
+          ]
+              : [
+            MemberInfo(name: name, mbti: mbti, role: role),
+            SizedBox(width: 20),
+            Hero(
+              tag: name, // Hero 애니메이션 태그
+              child: Image.asset(imagePath),
+            ),
+          ],
+        ),
       ),
     );
   }
